@@ -114,6 +114,7 @@ func (d *Proxy) Rewrite(r *httputil.ProxyRequest) {
 			"X-Forwarded-Host",
 			"X-Forwarded-Proto",
 			"X-Forwarded-For",
+			"X-Source-Port",
 		}
 		for _, h := range headers {
 			if v := r.In.Header.Get(h); v != "" {
