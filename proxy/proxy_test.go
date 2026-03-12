@@ -235,6 +235,39 @@ func TestProxy(t *testing.T) {
 			},
 		},
 		{
+			d: "should pass and set additional trusted forwarded headers",
+			prep: func(t *testing.T) {
+				conf.SetForTest(t, configuration.ProxyTrustCustomHeaders, []string{"X-Source-Port", "X-Custom"})
+			},
+			transform: func(r *http.Request) {
+				r.Header.Set("X-Source-Port", "1234")
+				r.Header.Set("X-Custom", "abc")
+			},
+			url: ts.URL + "/authn-anon/authz-allow/cred-noop/1234",
+			rulesRegexp: []rule.Rule{{
+				Match:          &rule.Match{Methods: []string{"GET"}, URL: ts.URL + "/authn-anon/authz-allow/cred-noop/<[0-9]+>"},
+				Authenticators: []rule.Handler{{Handler: "anonymous"}},
+				Authorizer:     rule.Handler{Handler: "allow"},
+				Mutators:       []rule.Handler{{Handler: "noop"}},
+				Upstream:       rule.Upstream{URL: backend.URL},
+			}},
+			rulesGlob: []rule.Rule{{
+				Match:          &rule.Match{Methods: []string{"GET"}, URL: ts.URL + "/authn-anon/authz-allow/cred-noop/<[0-9]*>"},
+				Authenticators: []rule.Handler{{Handler: "anonymous"}},
+				Authorizer:     rule.Handler{Handler: "allow"},
+				Mutators:       []rule.Handler{{Handler: "noop"}},
+				Upstream:       rule.Upstream{URL: backend.URL},
+			}},
+			code: http.StatusOK,
+			messages: []string{
+				"authorization=",
+				"url=/authn-anon/authz-allow/cred-noop/1234",
+				"host=" + x.ParseURLOrPanic(backend.URL).Host,
+				"header X-Source-Port=1234",
+				"header X-Custom=abc",
+			},
+		},
+		{
 			d: "should pass and remove x-forwarded headers",
 			transform: func(r *http.Request) {
 				r.Header.Set("X-Forwarded-Host", "foobar.com")

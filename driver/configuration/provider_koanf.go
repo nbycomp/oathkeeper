@@ -390,6 +390,10 @@ func (v *KoanfProvider) ProxyTrustForwardedHeaders() bool {
 	return v.source.Bool(ProxyTrustForwardedHeaders)
 }
 
+func (v *KoanfProvider) ProxyTrustCustomHeaders() []string {
+	return v.source.Strings(ProxyTrustCustomHeaders)
+}
+
 func (v *KoanfProvider) AuthenticatorConfig(id string, override json.RawMessage, dest interface{}) error {
 	return v.PipelineConfig("authenticators", id, override, dest)
 }

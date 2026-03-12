@@ -1204,6 +1204,13 @@
               "title": "Trust X-Forwarded Headers",
               "description": "Trust the X-Forwarded-* headers from the reverse proxy. This is useful when running behind a load balancer or similar. Set this to false if you are not running behind a reverse proxy that prevents Hop-by-Hop attacks."
             },
+            "trust_custom_headers": {
+              "type": "array",
+              "items": { "type": "string" },
+              "default": [],
+              "title": "Trust Custom Headers",
+              "description": "A list of custom HTTP header names to forward from the incoming request to the upstream. Unlike trust_forwarded_headers (which controls the standard X-Forwarded-* headers), this allows forwarding arbitrary headers (e.g., X-Source-Port) set by trusted infrastructure."
+            },
             "timeout": {
               "$ref": "#/definitions/serverTimeout"
             },

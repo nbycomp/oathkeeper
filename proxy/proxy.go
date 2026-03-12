@@ -122,6 +122,12 @@ func (d *Proxy) Rewrite(r *httputil.ProxyRequest) {
 		}
 	}
 
+	for _, h := range d.c.ProxyTrustCustomHeaders() {
+		if v := r.In.Header.Get(h); v != "" {
+			r.Out.Header.Set(h, v)
+		}
+	}
+
 	EnrichRequestedURL(r)
 	rl, err := d.r.RuleMatcher().Match(r.Out.Context(), r.Out.Method, r.Out.URL, rule.ProtocolHTTP)
 	if err != nil {

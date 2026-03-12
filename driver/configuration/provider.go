@@ -44,6 +44,7 @@ type Provider interface {
 	CORS(iface string) (cors.Options, bool)
 
 	ProxyTrustForwardedHeaders() bool
+	ProxyTrustCustomHeaders() []string
 
 	ProviderAuthenticators
 	ProviderErrorHandlers

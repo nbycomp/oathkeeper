@@ -12,6 +12,7 @@ const (
 	ProxyServeAddressHost               Key = "serve.proxy.host"
 	ProxyServeAddressPort               Key = "serve.proxy.port"
 	ProxyTrustForwardedHeaders          Key = "serve.proxy.trust_forwarded_headers"
+	ProxyTrustCustomHeaders             Key = "serve.proxy.trust_custom_headers"
 	APIServeAddressHost                 Key = "serve.api.host"
 	APIServeAddressPort                 Key = "serve.api.port"
 	APIReadTimeout                      Key = "serve.api.timeout.read"
