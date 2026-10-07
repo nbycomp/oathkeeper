@@ -1,0 +1,15 @@
+ignore:
+  # Ory's own advisories match the fork's pseudo-version (v0.40.2-0...),
+  # which sorts below the fix; the fix commits are in this branch.
+  - vulnerability: GHSA-w9mr-28mw-j8hg # fixed in v0.40.3 (2ab76872)
+    package:
+      name: github.com/ory/oathkeeper
+  - vulnerability: GHSA-4mq7-pvjg-xp2r # fixed in 198a2bc8
+    package:
+      name: github.com/ory/oathkeeper
+  - vulnerability: GHSA-p224-6x5r-fjpm # fixed in 8e000214
+    package:
+      name: github.com/ory/oathkeeper
+  - vulnerability: GHSA-vhr5-ggp3-qq85 # fixed in e9acca14
+    package:
+      name: github.com/ory/oathkeeper
